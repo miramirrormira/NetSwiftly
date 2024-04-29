@@ -1,0 +1,27 @@
+//
+//  URLSessionStub.swift
+//
+//
+//  Created by Mira Yang on 4/27/24.
+//
+
+@testable import NetSwiftly
+import Foundation
+
+class URLSessionStub: URLRequestable {
+
+    let data: Data
+    let response: URLResponse
+    let delay: UInt64
+    
+    init(data: Data, response: URLResponse, delayInSeconds: Double) {
+        self.data = data
+        self.response = response
+        self.delay = UInt64(delayInSeconds * 1000000000.0)
+    }
+    
+    func data(for request: URLRequest, delegate: (any URLSessionTaskDelegate)?) async throws -> (Data, URLResponse) {
+        try await Task.sleep(nanoseconds: delay)
+        return (data, response)
+    }
+}

@@ -16,10 +16,9 @@ final class RetriableURLRequestCommandTests: XCTestCase {
     }
     
     func test_request_with_three_retries_one_retriable_error_then_success_case_should_get_success_result() async throws {
-        let retriableStatusCode = try XCTUnwrap(retriableHTTPStatusCode.first)
-        let retriableHTTPError = NetworkingServerSideError.httpResponseError(statusCode: retriableStatusCode, data: nil)
+        let retriableHTTPError = NetworkingServerSideError.httpResponseError(statusCode: 123, data: nil)
         let requestableStub = RetryRequestableStub(retriedErrors: [retriableHTTPError], endWithResult: 0)
-        let retriableCommand = RetriableURLRequestCommand<Int>(retry: 3, requestable: AnyRequestable(requestableStub))
+        let retriableCommand = RetriableURLRequestCommand<Int>(retry: 3, requestable: AnyRequestable(requestableStub), retriableHTTPStatusCodes: [123])
         do {
             let result = try await retriableCommand.request()
             XCTAssertEqual(result, 0)
@@ -30,10 +29,9 @@ final class RetriableURLRequestCommandTests: XCTestCase {
     }
     
     func test_request_with_three_retries_two_retriable_error_then_success_case_should_get_success_result() async throws {
-        let retriableStatusCode = try XCTUnwrap(retriableHTTPStatusCode.first)
-        let retriableHTTPError = NetworkingServerSideError.httpResponseError(statusCode: retriableStatusCode, data: nil)
+        let retriableHTTPError = NetworkingServerSideError.httpResponseError(statusCode: 123, data: nil)
         let requestableStub = RetryRequestableStub(retriedErrors: [retriableHTTPError, retriableHTTPError], endWithResult: 0)
-        let retriableCommand = RetriableURLRequestCommand<Int>(retry: 3, requestable: AnyRequestable(requestableStub))
+        let retriableCommand = RetriableURLRequestCommand<Int>(retry: 3, requestable: AnyRequestable(requestableStub), retriableHTTPStatusCodes: [123])
         do {
             let result = try await retriableCommand.request()
             XCTAssertEqual(result, 0)
@@ -60,10 +58,9 @@ final class RetriableURLRequestCommandTests: XCTestCase {
     }
     
     func test_request_with_three_retries_three_retriable_error_should_throw_noReceiveServerResponse_error() async throws {
-        let retriableStatusCode = try XCTUnwrap(retriableHTTPStatusCode.first)
-        let retriableHTTPError = NetworkingServerSideError.httpResponseError(statusCode: retriableStatusCode, data: nil)
+        let retriableHTTPError = NetworkingServerSideError.httpResponseError(statusCode: 123, data: nil)
         let requestableStub = RetryRequestableStub<Int>(retriedErrors: [retriableHTTPError, retriableHTTPError, retriableHTTPError])
-        let retriableCommand = RetriableURLRequestCommand<Int>(retry: 3, requestable: AnyRequestable(requestableStub))
+        let retriableCommand = RetriableURLRequestCommand<Int>(retry: 3, requestable: AnyRequestable(requestableStub), retriableHTTPStatusCodes: [123])
         do {
             let _ = try await retriableCommand.request()
             XCTFail("should not get success result")

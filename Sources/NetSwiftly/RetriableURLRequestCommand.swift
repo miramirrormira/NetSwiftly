@@ -12,11 +12,15 @@ class RetriableURLRequestCommand<T>: URLRequestCommandDecorator<T> {
     let retry: Int
     let delayInSeconds: Double
     var tryCount: Int = 0
+    let retriableHTTPStatusCodes: Set<Int>
+    
     init(retry: Int,
          delayInSeconds: Double = 0,
-         requestable: AnyRequestable<T>) {
+         requestable: AnyRequestable<T>,
+         retriableHTTPStatusCodes: Set<Int> = [429, 503]) {
         self.retry = retry
         self.delayInSeconds = delayInSeconds
+        self.retriableHTTPStatusCodes = retriableHTTPStatusCodes
         super.init(requestable: requestable)
     }
     
@@ -27,7 +31,7 @@ class RetriableURLRequestCommand<T>: URLRequestCommandDecorator<T> {
                 let result = try await super.request()
                 return result
             } catch NetworkingServerSideError.httpResponseError(let statusCode, let data) {
-                guard retriableHTTPStatusCode.contains(statusCode) else {
+                guard retriableHTTPStatusCodes.contains(statusCode) else {
                     throw NetworkingServerSideError.httpResponseError(statusCode: statusCode, data: data)
                 }
                 try await Task.sleep(nanoseconds: UInt64(delayInSeconds * 1_000_000_000))

@@ -8,7 +8,7 @@
 @testable import NetSwiftly
 import Foundation
 
-class URLSessionStub: URLRequestable {
+class URLSessionStub: URLSessionAbstractLayer {
 
     let data: Data
     let response: URLResponse

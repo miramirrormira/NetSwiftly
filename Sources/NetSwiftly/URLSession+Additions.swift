@@ -7,4 +7,5 @@
 
 import Foundation
 
-extension URLSession: URLRequestable { }
+extension URLSession: URLSessionAbstractLayer { }
+

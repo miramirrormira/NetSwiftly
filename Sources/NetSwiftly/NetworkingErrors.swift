@@ -12,8 +12,9 @@ enum NetworkingClientSideError: Error {
     case cannotGenerateURL
 }
 
-enum NetworkingServerSideError: Error{
+enum NetworkingServerSideError: Error {
     case invalidServerResponse
+    case noServerResponse
     case httpResponseError(statusCode: Int, data: Data?)
     
     var statusCode: Int? {
@@ -24,4 +25,8 @@ enum NetworkingServerSideError: Error{
             return nil
         }
     }
+}
+
+extension NetworkingServerSideError: Equatable {
+    
 }

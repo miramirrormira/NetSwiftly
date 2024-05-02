@@ -6,7 +6,7 @@
 //
 
 import Foundation
-protocol Requestable {
+public protocol Requestable {
     associatedtype Response
     func request() async throws -> Response
 }

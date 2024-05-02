@@ -6,11 +6,11 @@
 //
 
 import Foundation
-class URLRequestDirector: URLRequestDirectable {
-    var networkConfiguration: NetworkConfiguration
-    var endpoint: Endpoint
+public class URLRequestDirector: URLRequestDirectable {
+    public var networkConfiguration: NetworkConfiguration
+    public var endpoint: Endpoint
     
-    init(networkConfiguration: NetworkConfiguration, endpoint: Endpoint) {
+    public init(networkConfiguration: NetworkConfiguration, endpoint: Endpoint) {
         self.networkConfiguration = networkConfiguration
         self.endpoint = endpoint
     }
@@ -29,7 +29,7 @@ class URLRequestDirector: URLRequestDirectable {
         throw NetworkingClientSideError.cannotGenerateURL
     }
     
-    func getURLRequest() throws -> URLRequest {
+    public func getURLRequest() throws -> URLRequest {
         let url = try getURL()
         let urlRequestBuilder = URLRequestBuilder(urlRequest: URLRequest(url: url))
         return try urlRequestBuilder

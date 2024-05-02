@@ -7,14 +7,14 @@
 
 import Foundation
 
-struct NetworkConfiguration {
-    var host: String
-    var scheme: String
-    var apiBaseRoute: String?
-    var headers: [String: String]
-    var queryParameters: [String: String]
+public struct NetworkConfiguration {
+    public var host: String
+    public var scheme: String
+    public var apiBaseRoute: String?
+    public var headers: [String: String]
+    public var queryParameters: [String: String]
     
-    init(host: String, 
+    public init(host: String, 
          scheme: String,
          apiBaseRoute: String? = nil,
          headers: [String : String] = [:],

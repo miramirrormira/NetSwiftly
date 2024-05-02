@@ -7,17 +7,17 @@
 
 import Foundation
 
-class URLRequestCommandDecorator<T>: Requestable {
+public class URLRequestCommandDecorator<T>: Requestable {
     
-    typealias Response = T
+    public typealias Response = T
     
-    var requestable: AnyRequestable<T>
+    public var requestable: AnyRequestable<T>
     
-    init(requestable: AnyRequestable<T>) {
+    public init(requestable: AnyRequestable<T>) {
         self.requestable = requestable
     }
     
-    func request() async throws -> T {
+    public func request() async throws -> T {
         try await requestable.request()
     }
 }

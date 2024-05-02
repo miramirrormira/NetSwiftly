@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol ResponseDecoder {
+public protocol ResponseDecoder {
     func decode<T: Decodable>(_ type: T.Type, from data: Data) throws -> T
 }
 

@@ -7,15 +7,15 @@
 
 import Foundation
 
-class URLRequestBuilder {
-    var urlRequest: URLRequest
+public class URLRequestBuilder {
+    public var urlRequest: URLRequest
     
-    init(urlRequest: URLRequest) {
+    public init(urlRequest: URLRequest) {
         self.urlRequest = urlRequest
     }
     
     @discardableResult
-    func updateHeaderFields(_ headers: [String: String]) -> URLRequestBuilder {
+    public func updateHeaderFields(_ headers: [String: String]) -> URLRequestBuilder {
         
         if headers.isEmpty {
             return self
@@ -32,18 +32,18 @@ class URLRequestBuilder {
     }
     
     @discardableResult
-    func updateHTTPMethod(_ method: HTTPMethod) -> URLRequestBuilder {
+    public func updateHTTPMethod(_ method: HTTPMethod) -> URLRequestBuilder {
         urlRequest.httpMethod = method.rawValue
         return self
     }
     
     @discardableResult
-    func updateHTTPBody(_ bodyParameters: [String: Any], encoder: BodyEncoder) throws -> URLRequestBuilder {
+    public func updateHTTPBody(_ bodyParameters: [String: Any], encoder: BodyEncoder) throws -> URLRequestBuilder {
         urlRequest.httpBody = try encoder.encode(bodyParameters)
         return self
     }
     
-    func exportURLRequest() -> URLRequest {
+    public func exportURLRequest() -> URLRequest {
         return urlRequest
     }
 }

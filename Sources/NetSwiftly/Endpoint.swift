@@ -7,15 +7,15 @@
 
 import Foundation
 
-struct Endpoint {
-    var path: String
-    var method: HTTPMethod
-    var headerParameters: [String: String]
-    var queryParameters: [String: Any]
-    var bodyParameters: [String: Any]
-    var bodyEncoder: BodyEncoder
+public struct Endpoint {
+    public var path: String
+    public var method: HTTPMethod
+    public var headerParameters: [String: String]
+    public var queryParameters: [String: Any]
+    public var bodyParameters: [String: Any]
+    public var bodyEncoder: BodyEncoder
     
-    init(path: String, 
+    public init(path: String, 
          method: HTTPMethod,
          headerParameters: [String : String] = [:],
          queryParameters: [String : Any] = [:],

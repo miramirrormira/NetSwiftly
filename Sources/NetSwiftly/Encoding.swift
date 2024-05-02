@@ -7,13 +7,13 @@
 
 import Foundation
 
-protocol BodyEncoder {
+public protocol BodyEncoder {
     func encode(_ parameters: [String: Any]) throws -> Data
 }
 
 /// Convert parameters to JSON data
-struct JSONBodyEncoder: BodyEncoder {
-    func encode(_ parameters: [String : Any]) throws -> Data {
+public struct JSONBodyEncoder: BodyEncoder {
+    public func encode(_ parameters: [String : Any]) throws -> Data {
         return try JSONSerialization.data(withJSONObject: parameters)
     }
 }

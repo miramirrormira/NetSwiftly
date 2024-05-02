@@ -7,14 +7,14 @@
 
 import Foundation
 
-class RetriableURLRequestCommand<T>: URLRequestCommandDecorator<T> {
+public class RetriableURLRequestCommand<T>: URLRequestCommandDecorator<T> {
     
-    let retry: Int
-    let delayInSeconds: Double
-    var tryCount: Int = 0
-    let retriableHTTPStatusCodes: Set<Int>
+    public let retry: Int
+    public let delayInSeconds: Double
+    public var tryCount: Int = 0
+    public let retriableHTTPStatusCodes: Set<Int>
     
-    init(retry: Int,
+    public init(retry: Int,
          delayInSeconds: Double = 0,
          requestable: AnyRequestable<T>,
          retriableHTTPStatusCodes: Set<Int> = [429, 503]) {
@@ -24,7 +24,7 @@ class RetriableURLRequestCommand<T>: URLRequestCommandDecorator<T> {
         super.init(requestable: requestable)
     }
     
-    override func request() async throws -> T {
+    public override func request() async throws -> T {
         while tryCount < retry {
             tryCount += 1
             do {

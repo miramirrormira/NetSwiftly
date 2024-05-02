@@ -6,7 +6,7 @@
 //
 
 import Foundation
-protocol URLSessionAbstractLayer {
+public protocol URLSessionAbstractLayer {
     func data(for request: URLRequest, delegate: (any URLSessionTaskDelegate)?) async throws -> (Data, URLResponse)
 }
 

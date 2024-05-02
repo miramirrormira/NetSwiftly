@@ -7,14 +7,14 @@
 
 import Foundation
 
-class OffsetBasedQueryStrategy: PaginationQueryStrategy {
+public class OffsetBasedQueryStrategy: PaginationQueryStrategy {
     
-    let offsetKey: String
-    var currentOffset: Int
-    let limitKey: String
-    let limit: Int
+    public let offsetKey: String
+    public var currentOffset: Int
+    public let limitKey: String
+    public let limit: Int
     
-    init(offsetKey: String, 
+    public init(offsetKey: String, 
          currentOffset: Int = 0,
          limitKey: String,
          limit: Int) {
@@ -28,7 +28,7 @@ class OffsetBasedQueryStrategy: PaginationQueryStrategy {
         currentOffset += limit
     }
     
-    func getNextPageQueryParameters() -> [String : Int] {
+    public func getNextPageQueryParameters() -> [String : Int] {
         updateCurrentOffset()
         var result = [String: Int]()
         result[offsetKey] = currentOffset

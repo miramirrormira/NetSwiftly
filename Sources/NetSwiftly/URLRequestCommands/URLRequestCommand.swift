@@ -7,16 +7,16 @@
 
 import Foundation
 
-class URLRequestCommand<T: Decodable>: Requestable {
+public class URLRequestCommand<T: Decodable>: Requestable {
     
-    typealias Response = T
+    public typealias Response = T
     
-    let urlRequestDirector: URLRequestDirectable
-    let urlSession: URLSessionAbstractLayer
-    let urlSessionTaskDelegate: URLSessionTaskDelegate?
-    let responseDecoder: ResponseDecoder
+    public let urlRequestDirector: URLRequestDirectable
+    public let urlSession: URLSessionAbstractLayer
+    public let urlSessionTaskDelegate: URLSessionTaskDelegate?
+    public let responseDecoder: ResponseDecoder
     
-    init(urlRequestDirector: URLRequestDirectable,
+    public init(urlRequestDirector: URLRequestDirectable,
          urlSession: URLSessionAbstractLayer = URLSession.shared,
          urlSessionTaskDelegate: URLSessionTaskDelegate? = nil,
          responseDecoder: ResponseDecoder = JSONDecoder()) {
@@ -26,7 +26,7 @@ class URLRequestCommand<T: Decodable>: Requestable {
         self.responseDecoder = responseDecoder
     }
     
-    func request() async throws -> T {
+    public func request() async throws -> T {
         let (data, response) = try await executeURLRequest()
         guard let httpResonse = response as? HTTPURLResponse else {
             throw NetworkingServerSideError.invalidServerResponse

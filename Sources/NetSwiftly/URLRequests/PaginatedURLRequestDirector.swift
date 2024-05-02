@@ -7,11 +7,11 @@
 
 import Foundation
 
-class PaginatedURLRequestDirector: URLRequestDirectableDecorator {
+public class PaginatedURLRequestDirector: URLRequestDirectableDecorator {
     
-    let paginationQueryStrategy: PaginationQueryStrategy
+    public let paginationQueryStrategy: PaginationQueryStrategy
     
-    init(urlRequestDirector: URLRequestDirectable,
+    public init(urlRequestDirector: URLRequestDirectable,
          paginationQueryStrategy: PaginationQueryStrategy) {
         self.paginationQueryStrategy = paginationQueryStrategy
         super.init(urlRequestDirector: urlRequestDirector)
@@ -24,7 +24,7 @@ class PaginatedURLRequestDirector: URLRequestDirectableDecorator {
         }
     }
     
-    override func getURLRequest() throws -> URLRequest {
+    public override func getURLRequest() throws -> URLRequest {
         updateEndpoind()
         return try super.getURLRequest()
     }

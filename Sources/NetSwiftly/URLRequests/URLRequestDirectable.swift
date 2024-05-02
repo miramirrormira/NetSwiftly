@@ -6,7 +6,7 @@
 //
 
 import Foundation
-protocol URLRequestDirectable {
+public protocol URLRequestDirectable {
     var endpoint: Endpoint { get set }
     var networkConfiguration: NetworkConfiguration { get set }
     func getURLRequest() throws -> URLRequest

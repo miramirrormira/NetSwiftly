@@ -7,17 +7,17 @@
 
 import Foundation
 
-class AnyRequestable<T>: Requestable {
+public class AnyRequestable<T>: Requestable {
     
-    typealias Response = T
+    public typealias Response = T
     
     private let wrappedRequest: () async throws -> T
     
-    init<V: Requestable>(_ requestable: V) where V.Response == T {
+    public init<V: Requestable>(_ requestable: V) where V.Response == T {
         self.wrappedRequest = requestable.request
     }
     
-    func request() async throws -> T {
+    public func request() async throws -> T {
         try await wrappedRequest()
     }
 }

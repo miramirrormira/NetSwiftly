@@ -7,17 +7,17 @@
 
 import Foundation
 
-enum NetworkingClientSideError: Error {
+public enum NetworkingClientSideError: Error {
     case cannotGenerateURLComponents
     case cannotGenerateURL
 }
 
-enum NetworkingServerSideError: Error {
+public enum NetworkingServerSideError: Error {
     case invalidServerResponse
     case noServerResponse
     case httpResponseError(statusCode: Int, data: Data?)
     
-    var statusCode: Int? {
+    public var statusCode: Int? {
         switch self {
         case .httpResponseError(let statusCode, _):
             return statusCode
@@ -27,6 +27,4 @@ enum NetworkingServerSideError: Error {
     }
 }
 
-extension NetworkingServerSideError: Equatable {
-    
-}
+extension NetworkingServerSideError: Equatable { }

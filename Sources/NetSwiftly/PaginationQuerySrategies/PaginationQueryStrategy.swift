@@ -7,6 +7,6 @@
 
 import Foundation
 
-protocol PaginationQueryStrategy {
+public protocol PaginationQueryStrategy {
     func getNextPageQueryParameters() -> [String: Int]
 }

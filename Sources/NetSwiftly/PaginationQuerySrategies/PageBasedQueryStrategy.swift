@@ -7,13 +7,13 @@
 
 import Foundation
 
-class PageBasedQueryStrategy: PaginationQueryStrategy {
+public class PageBasedQueryStrategy: PaginationQueryStrategy {
     
-    let pageKey: String
-    var currentPage: Int
-    var pageSizeInfo: (String, Int)?
+    public let pageKey: String
+    public var currentPage: Int
+    public var pageSizeInfo: (String, Int)?
     
-    init(pageKey: String, 
+    public init(pageKey: String, 
          currentPage: Int = 0,
          pageSizeInfo: (String, Int)? = nil) {
         self.pageKey = pageKey
@@ -25,7 +25,7 @@ class PageBasedQueryStrategy: PaginationQueryStrategy {
         currentPage += 1
     }
     
-    func getNextPageQueryParameters() -> [String : Int] {
+    public func getNextPageQueryParameters() -> [String : Int] {
         updateCurrentPage()
         var result = [String: Int]()
         result[pageKey] = currentPage

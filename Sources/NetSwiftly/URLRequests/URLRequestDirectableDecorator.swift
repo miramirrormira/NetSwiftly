@@ -7,19 +7,19 @@
 
 import Foundation
 
-class URLRequestDirectableDecorator: URLRequestDirectable {
+public class URLRequestDirectableDecorator: URLRequestDirectable {
     
-    var endpoint: Endpoint
-    var networkConfiguration: NetworkConfiguration
-    var urlRequestDirector: URLRequestDirectable
+    public var endpoint: Endpoint
+    public var networkConfiguration: NetworkConfiguration
+    public var urlRequestDirector: URLRequestDirectable
     
-    init(urlRequestDirector: URLRequestDirectable) {
+    public init(urlRequestDirector: URLRequestDirectable) {
         self.urlRequestDirector = urlRequestDirector
         self.endpoint = urlRequestDirector.endpoint
         self.networkConfiguration = urlRequestDirector.networkConfiguration
     }
     
-    func getURLRequest() throws -> URLRequest {
+    public func getURLRequest() throws -> URLRequest {
         return try urlRequestDirector.getURLRequest()
     }
 }

@@ -7,23 +7,23 @@
 
 import Foundation
 
-class URLComponentsBuilder {
-    var urlComponents = URLComponents()
+public class URLComponentsBuilder {
+    public var urlComponents = URLComponents()
     
     @discardableResult
-    func addHost(_ host: String) -> URLComponentsBuilder {
+    public func addHost(_ host: String) -> URLComponentsBuilder {
         urlComponents.host = host
         return self
     }
     
     @discardableResult
-    func addScheme(_ scheme: String) -> URLComponentsBuilder {
+    public func addScheme(_ scheme: String) -> URLComponentsBuilder {
         urlComponents.scheme = scheme
         return self
     }
     
     @discardableResult
-    func updateQueryItems(_ queryParameters: [String: Any]) -> URLComponentsBuilder {
+    public func updateQueryItems(_ queryParameters: [String: Any]) -> URLComponentsBuilder {
         guard queryParameters.isEmpty == false else {
             return self
         }
@@ -43,7 +43,7 @@ class URLComponentsBuilder {
     }
     
     @discardableResult
-    func appendPath(_ path: String?) -> URLComponentsBuilder {
+    public func appendPath(_ path: String?) -> URLComponentsBuilder {
         guard let path = path else { return self }
         let formattedPath = formatPath(path)
         urlComponents.path += formattedPath
@@ -63,7 +63,7 @@ class URLComponentsBuilder {
         return pathCopy
     }
     
-    func exportURL() -> URL? {
+    public func exportURL() -> URL? {
         return urlComponents.url
     }
 }

@@ -26,6 +26,6 @@ class PaginatedURLRequestDirector: URLRequestDirectableDecorator {
     
     override func getURLRequest() throws -> URLRequest {
         updateEndpoind()
-        return try urlRequestDirector.getURLRequest()
+        return try super.getURLRequest()
     }
 }

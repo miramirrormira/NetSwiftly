@@ -7,7 +7,7 @@
 
 import Foundation
 
-public class URLRequestCommandDecorator<T>: Requestable {
+public class RequestableDecorator<T>: Requestable {
     
     public typealias Response = T
     

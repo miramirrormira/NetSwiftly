@@ -7,7 +7,7 @@
 
 import Foundation
 
-public class RetriableURLRequestCommand<T>: URLRequestCommandDecorator<T> {
+public class RetriableURLRequestCommand<T>: RequestableDecorator<T> {
     
     public let retry: Int
     public let delayInSeconds: Double

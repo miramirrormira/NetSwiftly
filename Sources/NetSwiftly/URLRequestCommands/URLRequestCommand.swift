@@ -39,7 +39,7 @@ public class URLRequestCommand<T: Decodable>: Requestable {
     }
     
     func executeURLRequest() async throws -> (Data, URLResponse) {
-        let urlRequest = try urlRequestDirector.getURLRequest()
+        let urlRequest = try await urlRequestDirector.getURLRequest()
         return try await urlSession.data(for: urlRequest, delegate: urlSessionTaskDelegate)
     }
 }

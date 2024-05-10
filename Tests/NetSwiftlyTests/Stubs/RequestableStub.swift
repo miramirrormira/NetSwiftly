@@ -10,16 +10,16 @@ import Foundation
 class RequestableStub<T>: Requestable {
     
     typealias Response = T
-   
-    let delayInSeconds: Double
-    var result: [T] = []
-    var error: Error?
-    var count = 0
+    private let delayInSeconds: Double
+    private(set) var results: [T] = []
+    private(set) var error: Error?
+    private var count = 0
+    private let countQueue = DispatchQueue(label: "count-thread-safty-serial-queue")
     
     init(delayInSeconds: Double = 0.5,
-         result: T) {
+         returning result: T) {
         self.delayInSeconds = delayInSeconds
-        self.result = [result]
+        self.results = [result]
     }
     
     init(delayInSeconds: Double = 0.5,
@@ -29,22 +29,34 @@ class RequestableStub<T>: Requestable {
     }
     
     init(delayInSeconds: Double = 0.5,
-         retriedResults: [T],
-         endWithError: Error) {
+         returning results: [T],
+         endWith error: Error? = nil) {
         self.delayInSeconds = delayInSeconds
-        self.result = retriedResults
-        self.error = endWithError
+        self.results = results
+        self.error = error
     }
     
     func request() async throws -> T {
         try await Task.sleep(nanoseconds: UInt64(delayInSeconds * 1_000_000_000))
-        if result.count > count {
-            let index = count
-            count += 1
-            return result[index]
-        } else if let error = error {
-            throw error
+        return try await withCheckedThrowingContinuation { continuation in
+            countQueue.async { [weak self] in
+                guard let strongSelf = self else {
+                    continuation.resume(throwing: RequestableStubErrors.selfNotCaptured)
+                    return
+                }
+                if strongSelf.results.count > strongSelf.count {
+                    let index = strongSelf.count
+                    strongSelf.count += 1
+                    continuation.resume(returning: strongSelf.results[index])
+                } else {
+                    continuation.resume(throwing: RequestableStubErrors.reachedLastResultsElement)
+                }
+            }
         }
-        fatalError()
+    }
+    
+    enum RequestableStubErrors: Error {
+        case selfNotCaptured
+        case reachedLastResultsElement
     }
 }

@@ -17,15 +17,15 @@ public class PaginatedURLRequestDirector: URLRequestDirectableDecorator {
         super.init(urlRequestDirector: urlRequestDirector)
     }
     
-    private func updateEndpoind() {
-        let parameters = paginationQueryStrategy.getNextPageQueryParameters()
+    private func updateEndpoind() async throws {
+        let parameters = try await paginationQueryStrategy.getNextPageQueryParameters()
         for (key, value) in parameters {
             endpoint.queryParameters[key] = value
         }
     }
     
-    public override func getURLRequest() throws -> URLRequest {
-        updateEndpoind()
-        return try super.getURLRequest()
+    public override func getURLRequest() async throws -> URLRequest {
+        try await updateEndpoind()
+        return try await super.getURLRequest()
     }
 }

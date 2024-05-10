@@ -19,7 +19,7 @@ public class URLRequestDirectableDecorator: URLRequestDirectable {
         self.networkConfiguration = urlRequestDirector.networkConfiguration
     }
     
-    public func getURLRequest() throws -> URLRequest {
-        return try urlRequestDirector.getURLRequest()
+    public func getURLRequest() async throws -> URLRequest {
+        return try await urlRequestDirector.getURLRequest()
     }
 }

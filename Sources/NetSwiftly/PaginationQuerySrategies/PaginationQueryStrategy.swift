@@ -8,5 +8,5 @@
 import Foundation
 
 public protocol PaginationQueryStrategy {
-    func getNextPageQueryParameters() -> [String: Int]
+    func getNextPageQueryParameters() async throws -> [String: Int]
 }

@@ -5,7 +5,7 @@ final class AnyRequestableTests: XCTestCase {
 
     func test_wrappedRequest() async throws {
         let urlRequestResponse = try URLRequestResponse.fixtureForHTTPURLResponse()
-        let requestableStub = RequestableStub(delayInSeconds: 0.5, result: (urlRequestResponse.data, urlRequestResponse.response))
+        let requestableStub = RequestableStub(delayInSeconds: 0.5, returning: (urlRequestResponse.data, urlRequestResponse.response))
         let anyRequest = AnyRequestable(requestableStub)
         let result = try await anyRequest.request()
         XCTAssertEqual(result.0, urlRequestResponse.data)

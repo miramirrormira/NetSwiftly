@@ -9,10 +9,10 @@ import Foundation
 
 public class RetriableURLRequestCommand<T>: RequestableDecorator<T> {
     
-    public let retry: Int
-    public let delayInSeconds: Double
-    public var tryCount: Int = 0
-    public let retriableHTTPStatusCodes: Set<Int>
+    private let retry: Int
+    private let delayInSeconds: Double
+    private(set) var tryCount: Int = 0
+    private let retriableHTTPStatusCodes: Set<Int>
     
     public init(retry: Int,
          delayInSeconds: Double = 0,

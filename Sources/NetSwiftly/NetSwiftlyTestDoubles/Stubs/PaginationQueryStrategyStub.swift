@@ -4,7 +4,6 @@
 //
 //  Created by Mira Yang on 4/28/24.
 //
-@testable import NetSwiftly
 import Foundation
 
 class PaginationQueryStrategyStub: PaginationQueryStrategy {

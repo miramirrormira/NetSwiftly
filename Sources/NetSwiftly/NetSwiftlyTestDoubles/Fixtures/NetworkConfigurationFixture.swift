@@ -6,7 +6,6 @@
 //
 
 import Foundation
-@testable import NetSwiftly
 
 extension NetworkConfiguration {
     static func fixture(host: String = "www.example.com",

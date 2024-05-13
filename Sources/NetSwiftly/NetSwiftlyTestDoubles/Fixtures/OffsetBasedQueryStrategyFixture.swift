@@ -6,7 +6,6 @@
 //
 
 import Foundation
-@testable import NetSwiftly
 
 extension OffsetBasedQueryStrategy {
     static func fixture(offsetKey: String = "offset",

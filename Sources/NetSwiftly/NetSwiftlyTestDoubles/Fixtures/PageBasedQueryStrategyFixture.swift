@@ -6,7 +6,6 @@
 //
 
 import Foundation
-@testable import NetSwiftly
 
 extension PageBasedQueryStrategy {
     static func fixture(pageKey: String = "page",

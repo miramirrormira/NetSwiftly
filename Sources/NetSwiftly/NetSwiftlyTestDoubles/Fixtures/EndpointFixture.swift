@@ -6,7 +6,6 @@
 //
 
 import Foundation
-@testable import NetSwiftly
 
 extension Endpoint {
     static func fixture(path: String = "/test",

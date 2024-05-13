@@ -5,7 +5,6 @@
 //  Created by Mira Yang on 5/1/24.
 //
 
-@testable import NetSwiftly
 import Foundation
 
 class RetryRequestableStub<T>: Requestable {

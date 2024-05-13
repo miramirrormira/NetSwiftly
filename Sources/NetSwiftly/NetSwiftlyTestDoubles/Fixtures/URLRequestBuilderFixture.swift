@@ -6,7 +6,6 @@
 //
 
 import Foundation
-@testable import NetSwiftly
 
 extension URLRequestBuilder {
     static func fixture(urlString: String = "www.example.com") -> URLRequestBuilder {

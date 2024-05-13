@@ -5,7 +5,6 @@
 //  Created by Mira Yang on 4/27/24.
 //
 
-@testable import NetSwiftly
 import Foundation
 
 class URLSessionStub: URLSessionAbstractLayer {

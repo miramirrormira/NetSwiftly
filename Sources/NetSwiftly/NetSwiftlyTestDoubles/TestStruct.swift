@@ -7,9 +7,12 @@
 
 import Foundation
 
-struct TestStruct: Codable, Equatable {
+struct TestStruct: Codable, Equatable, Identifiable {
     var name: String
     var value: Int
+    var id: String {
+        name + "\(value)"
+    }
     
     init(name: String = "name", value: Int = 123) {
         self.name = name

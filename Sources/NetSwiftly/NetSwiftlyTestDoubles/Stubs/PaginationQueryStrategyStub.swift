@@ -8,7 +8,7 @@ import Foundation
 
 public class PaginationQueryStrategyStub: PaginationQueryStrategy {
     let result: [String: Int]
-    init(result: [String : Int]) {
+    public init(result: [String : Int]) {
         self.result = result
     }
     public func getNextPageQueryParameters() -> [String : Int] {

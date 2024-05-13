@@ -13,7 +13,7 @@ public class URLSessionStub: URLSessionAbstractLayer {
     let response: URLResponse
     let delay: UInt64
     
-    init(data: Data, response: URLResponse, delayInSeconds: Double) {
+    public init(data: Data, response: URLResponse, delayInSeconds: Double) {
         self.data = data
         self.response = response
         self.delay = UInt64(delayInSeconds * 1000000000.0)

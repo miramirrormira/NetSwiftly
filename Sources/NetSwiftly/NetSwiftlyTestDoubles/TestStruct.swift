@@ -14,7 +14,7 @@ struct TestStruct: Codable, Equatable, Identifiable {
         name + "\(value)"
     }
     
-    init(name: String = "name", value: Int = 123) {
+    public init(name: String = "name", value: Int = 123) {
         self.name = name
         self.value = value
     }

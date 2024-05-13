@@ -12,7 +12,7 @@ public struct URLRequestDirectorDummy: URLRequestDirectable {
     public var endpoint: Endpoint
     public var networkConfiguration: NetworkConfiguration
     
-    init() {
+    public init() {
         self.endpoint = Endpoint.fixture()
         self.networkConfiguration = NetworkConfiguration.fixture()
     }

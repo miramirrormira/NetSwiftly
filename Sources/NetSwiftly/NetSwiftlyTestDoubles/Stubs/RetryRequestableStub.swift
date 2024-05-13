@@ -16,7 +16,7 @@ public class RetryRequestableStub<T>: Requestable {
     var errors: [Error] = []
     var count = 0
     
-    init(delayInSeconds: Double = 0.5,
+    public init(delayInSeconds: Double = 0.5,
          retriedErrors: [Error],
          endWithResult: T? = nil) {
         self.delayInSeconds = delayInSeconds

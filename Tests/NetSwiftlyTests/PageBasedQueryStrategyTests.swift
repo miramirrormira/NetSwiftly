@@ -31,8 +31,8 @@ final class PageBasedQueryStrategyTests: XCTestCase {
     
     func test_getNextPageQueryParameters_result_page_should_increase_by_one() async throws {
         let strategy = PageBasedQueryStrategy.fixture(pageKey: "page")
-        var pageNumber1 = try await strategy.getNextPageQueryParameters()["page"]
-        var pageNumber2 = try await strategy.getNextPageQueryParameters()["page"]
+        let pageNumber1 = try await strategy.getNextPageQueryParameters()["page"]
+        let pageNumber2 = try await strategy.getNextPageQueryParameters()["page"]
         let unwrappedPageNumber1 = try XCTUnwrap(pageNumber1)
         let unwrappedPageNumber2 = try XCTUnwrap(pageNumber2)
         XCTAssertEqual(unwrappedPageNumber1 + 1, unwrappedPageNumber2)

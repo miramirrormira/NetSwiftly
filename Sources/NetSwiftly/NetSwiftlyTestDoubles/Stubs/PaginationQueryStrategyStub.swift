@@ -6,12 +6,12 @@
 //
 import Foundation
 
-class PaginationQueryStrategyStub: PaginationQueryStrategy {
+public class PaginationQueryStrategyStub: PaginationQueryStrategy {
     let result: [String: Int]
     init(result: [String : Int]) {
         self.result = result
     }
-    func getNextPageQueryParameters() -> [String : Int] {
+    public func getNextPageQueryParameters() -> [String : Int] {
         result
     }
 }

@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension OffsetBasedQueryStrategy {
+public extension OffsetBasedQueryStrategy {
     static func fixture(offsetKey: String = "offset",
                         currentOffset: Int = 0,
                         limitKey: String = "limit",

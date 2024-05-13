@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension PageBasedQueryStrategy {
+public extension PageBasedQueryStrategy {
     static func fixture(pageKey: String = "page",
                         currentPage: Int = 0,
                         pageSizeInfo: (String, Int)? = nil) -> PageBasedQueryStrategy {

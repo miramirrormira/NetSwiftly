@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension Endpoint {
+public extension Endpoint {
     static func fixture(path: String = "/test",
                         method: HTTPMethod = .get,
                         headerParameters: [String : String] = ["endpointHeaderParam": "endpointHeaderParamValue"],

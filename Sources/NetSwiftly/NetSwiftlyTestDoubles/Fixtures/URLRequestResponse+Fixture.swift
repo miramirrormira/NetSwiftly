@@ -6,12 +6,12 @@
 //
 import Foundation
 
-struct URLRequestResponse {
+public struct URLRequestResponse {
     let data: Data
     let response: URLResponse
 }
 
-extension URLRequestResponse {
+public extension URLRequestResponse {
     static func fixtureForHTTPURLResponse(data: Data = Data([1,2,3]),
                                           urlString: String = "www.example.com",
                                           statusCode: Int = 200,

@@ -6,9 +6,9 @@
 //
 import Foundation
 
-class RequestableStub<T>: Requestable {
+public class RequestableStub<T>: Requestable {
     
-    typealias Response = T
+    public typealias Response = T
     private let delayInSeconds: Double
     private(set) var results: [T] = []
     private(set) var error: Error?
@@ -35,7 +35,7 @@ class RequestableStub<T>: Requestable {
         self.error = error
     }
     
-    func request() async throws -> T {
+    public func request() async throws -> T {
         try await Task.sleep(nanoseconds: UInt64(delayInSeconds * 1_000_000_000))
         return try await withCheckedThrowingContinuation { continuation in
             countQueue.async { [weak self] in

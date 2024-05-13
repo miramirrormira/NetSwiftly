@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension URLRequestBuilder {
+public extension URLRequestBuilder {
     static func fixture(urlString: String = "www.example.com") -> URLRequestBuilder {
         let url = URL(string: urlString)!
         let urlRequest = URLRequest(url: url)

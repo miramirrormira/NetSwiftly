@@ -7,9 +7,9 @@
 
 import Foundation
 
-class RetryRequestableStub<T>: Requestable {
+public class RetryRequestableStub<T>: Requestable {
     
-    typealias Response = T
+    public typealias Response = T
    
     let delayInSeconds: Double
     let result: T?
@@ -24,7 +24,7 @@ class RetryRequestableStub<T>: Requestable {
         self.errors = retriedErrors
     }
     
-    func request() async throws -> T {
+    public func request() async throws -> T {
         try await Task.sleep(nanoseconds: UInt64(delayInSeconds * 1_000_000_000))
         if errors.count > count {
             let index = count

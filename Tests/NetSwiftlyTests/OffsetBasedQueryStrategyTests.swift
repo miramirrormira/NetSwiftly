@@ -28,8 +28,8 @@ final class OffsetBasedQueryStrategyTests: XCTestCase {
     func test_getNextPageQueryParameters_offset_should_increase_by_limit() async throws {
         let strategy = OffsetBasedQueryStrategy.fixture(offsetKey: "offset")
         
-        var offset1 = try await strategy.getNextPageQueryParameters()["offset"]!
-        var offset2 = try await strategy.getNextPageQueryParameters()["offset"]!
+        let offset1 = try await strategy.getNextPageQueryParameters()["offset"]!
+        let offset2 = try await strategy.getNextPageQueryParameters()["offset"]!
         let unwrappedOffset1 = try XCTUnwrap(offset1)
         let unwrappedOffset2 = try XCTUnwrap(offset2)
         XCTAssertEqual(unwrappedOffset1 + 10, unwrappedOffset2)

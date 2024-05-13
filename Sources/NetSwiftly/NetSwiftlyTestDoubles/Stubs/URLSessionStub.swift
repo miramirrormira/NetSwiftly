@@ -7,7 +7,7 @@
 
 import Foundation
 
-class URLSessionStub: URLSessionAbstractLayer {
+public class URLSessionStub: URLSessionAbstractLayer {
 
     let data: Data
     let response: URLResponse
@@ -19,7 +19,7 @@ class URLSessionStub: URLSessionAbstractLayer {
         self.delay = UInt64(delayInSeconds * 1000000000.0)
     }
     
-    func data(for request: URLRequest, delegate: (any URLSessionTaskDelegate)?) async throws -> (Data, URLResponse) {
+    public func data(for request: URLRequest, delegate: (any URLSessionTaskDelegate)?) async throws -> (Data, URLResponse) {
         try await Task.sleep(nanoseconds: delay)
         return (data, response)
     }

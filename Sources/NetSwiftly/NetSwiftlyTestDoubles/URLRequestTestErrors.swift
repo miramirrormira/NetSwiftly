@@ -7,6 +7,6 @@
 
 import Foundation
 
-enum URLRequestTestErrors: Error {
+public enum URLRequestTestErrors: Error {
     case cannnotGenerateHTTPURLResponse
 }

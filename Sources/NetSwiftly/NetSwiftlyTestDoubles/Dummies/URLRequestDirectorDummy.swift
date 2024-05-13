@@ -7,10 +7,10 @@
 
 import Foundation
 
-struct URLRequestDirectorDummy: URLRequestDirectable {
+public struct URLRequestDirectorDummy: URLRequestDirectable {
     
-    var endpoint: Endpoint
-    var networkConfiguration: NetworkConfiguration
+    public var endpoint: Endpoint
+    public var networkConfiguration: NetworkConfiguration
     
     init() {
         self.endpoint = Endpoint.fixture()
@@ -21,7 +21,7 @@ struct URLRequestDirectorDummy: URLRequestDirectable {
         URL(string: "www.example.com")!
     }
     
-    func getURLRequest() throws -> URLRequest {
+    public func getURLRequest() throws -> URLRequest {
         URLRequest(url: try getURL())
     }
     

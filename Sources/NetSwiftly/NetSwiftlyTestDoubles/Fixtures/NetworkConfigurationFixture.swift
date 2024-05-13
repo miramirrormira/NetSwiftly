@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension NetworkConfiguration {
+public extension NetworkConfiguration {
     static func fixture(host: String = "www.example.com",
                         scheme: String = "https",
                         apiBaseRoute: String? = "v1",

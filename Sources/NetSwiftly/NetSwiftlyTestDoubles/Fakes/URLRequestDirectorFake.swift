@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct URLRequestDirectorDummy: URLRequestDirectable {
+public struct URLRequestDirectorFake: URLRequestDirectable {
     
     public var endpoint: Endpoint
     public var networkConfiguration: NetworkConfiguration

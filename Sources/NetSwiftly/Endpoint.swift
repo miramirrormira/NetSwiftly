@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Endpoint {
+public class Endpoint {
     public var path: String
     public var method: HTTPMethod
     public var headerParameters: [String: String]

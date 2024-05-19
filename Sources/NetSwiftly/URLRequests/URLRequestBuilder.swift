@@ -16,15 +16,12 @@ public class URLRequestBuilder {
     
     @discardableResult
     public func updateHeaderFields(_ headers: [String: String]) -> URLRequestBuilder {
-        
         if headers.isEmpty {
             return self
         }
-        
         if urlRequest.allHTTPHeaderFields == nil {
             urlRequest.allHTTPHeaderFields = [:]
         }
-        
         for (key, value) in headers {
             urlRequest.allHTTPHeaderFields![key] = value
         }
@@ -39,6 +36,9 @@ public class URLRequestBuilder {
     
     @discardableResult
     public func updateHTTPBody(_ bodyParameters: [String: Any], encoder: BodyEncoder) throws -> URLRequestBuilder {
+        if bodyParameters.isEmpty {
+            return self
+        }
         urlRequest.httpBody = try encoder.encode(bodyParameters)
         return self
     }

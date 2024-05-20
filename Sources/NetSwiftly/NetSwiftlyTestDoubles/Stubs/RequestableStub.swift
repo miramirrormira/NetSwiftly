@@ -16,20 +16,20 @@ public class RequestableStub<T>: Requestable {
     private let countQueue = DispatchQueue(label: "count-thread-safty-serial-queue")
     
     public init(delayInSeconds: Double = 0.5,
-         returning result: T) {
+                returning result: T) {
         self.delayInSeconds = delayInSeconds
         self.results = [result]
     }
     
     public init(delayInSeconds: Double = 0.5,
-         error: Error) {
+                error: Error) {
         self.delayInSeconds = delayInSeconds
         self.error = error
     }
     
     public init(delayInSeconds: Double = 0.5,
-         returning results: [T],
-         endWith error: Error? = nil) {
+                returning results: [T],
+                endWith error: Error? = nil) {
         self.delayInSeconds = delayInSeconds
         self.results = results
         self.error = error

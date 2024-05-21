@@ -30,8 +30,9 @@ public class OffsetBasedQueryStrategy: PaginationQueryStrategy {
     private func updateCurrentOffset() async -> Int {
         await withCheckedContinuation { continuation in
             threadSafetyQueue.async(flags: .barrier) {
+                let offset = self.currentOffset
                 self.currentOffset += self.limit
-                continuation.resume(returning: self.currentOffset)
+                continuation.resume(returning: offset)
             }
         }
     }

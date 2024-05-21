@@ -7,7 +7,7 @@
 import Foundation
 
 public class PaginationQueryStrategyStub: PaginationQueryStrategy {
-    let result: [String: Int]
+    var result: [String: Int]
     public init(result: [String : Int]) {
         self.result = result
     }

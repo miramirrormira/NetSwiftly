@@ -25,6 +25,13 @@ final class OffsetBasedQueryStrategyTests: XCTestCase {
         XCTAssertEqual(result["limit"], 10)
     }
     
+    func test_getNextPageQueryParameters_offset_should_start_from_zero() async throws {
+        let strategy = OffsetBasedQueryStrategy.fixture(offsetKey: "offset")
+        let offset = try await strategy.getNextPageQueryParameters()["offset"]!
+        let unwrappedOffset = try XCTUnwrap(offset)
+        XCTAssertEqual(unwrappedOffset, 0)
+    }
+    
     func test_getNextPageQueryParameters_offset_should_increase_by_limit() async throws {
         let strategy = OffsetBasedQueryStrategy.fixture(offsetKey: "offset")
         

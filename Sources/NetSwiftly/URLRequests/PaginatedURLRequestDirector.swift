@@ -9,7 +9,8 @@ import Foundation
 
 public class PaginatedURLRequestDirector: URLRequestDirectableDecorator {
     
-    public let paginationQueryStrategy: PaginationQueryStrategy
+    let paginationQueryStrategy: PaginationQueryStrategy
+    var shouldUpdateEndpoint: Bool = true
     
     public init(urlRequestDirector: URLRequestDirectable,
          paginationQueryStrategy: PaginationQueryStrategy) {
@@ -18,6 +19,7 @@ public class PaginatedURLRequestDirector: URLRequestDirectableDecorator {
     }
     
     private func updateEndpoind() async throws {
+        guard shouldUpdateEndpoint else { return }
         let parameters = try await paginationQueryStrategy.getNextPageQueryParameters()
         for (key, value) in parameters {
             endpoint.queryParameters[key] = value

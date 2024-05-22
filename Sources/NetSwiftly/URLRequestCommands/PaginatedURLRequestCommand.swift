@@ -24,6 +24,16 @@ public class PaginatedURLRequestCommand<T: Decodable>: URLRequestCommand<T> {
     }
 }
 
+public extension PaginatedURLRequestCommand {
+    convenience init(networkConfiguration: NetworkConfiguration,
+                     endpoint: Endpoint,
+                     paginationQueryStrategy: PaginationQueryStrategy) {
+        let baseURLRequestDirector = URLRequestDirector(networkConfiguration: networkConfiguration, endpoint: endpoint)
+        let pagedURLRequestDirector = PaginatedURLRequestDirector(urlRequestDirector: baseURLRequestDirector, paginationQueryStrategy: paginationQueryStrategy)
+        self.init(urlRequestDirector: pagedURLRequestDirector)
+    }
+}
+
 enum PaginatedURLRequestCommandError: Error {
     case didNotUsePaginatedURLRequestDirector
 }

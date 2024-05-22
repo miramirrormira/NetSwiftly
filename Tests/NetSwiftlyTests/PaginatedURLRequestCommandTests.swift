@@ -37,4 +37,25 @@ final class PaginatedURLRequestCommandTests: XCTestCase {
             XCTFail("wrong error")
         }
     }
+    
+    func test_convinient_init_with_networkConfiguration_endpoint_paginationQueryStrategy() {
+        let networkConfiguration = NetworkConfiguration.fixture()
+        let endpoint = Endpoint.fixture()
+        let paginationQueryStrategy = PageBasedQueryStrategy.fixture()
+        
+        let sut: PaginatedURLRequestCommand<TestStruct> = .init(networkConfiguration: networkConfiguration, endpoint: endpoint, paginationQueryStrategy: paginationQueryStrategy)
+        
+        XCTAssertIdentical(sut.urlRequestDirector.endpoint, endpoint)
+        XCTAssertIdentical(sut.urlRequestDirector.networkConfiguration, networkConfiguration)
+        guard let paginatedURLRequestDirector = sut.urlRequestDirector as? PaginatedURLRequestDirector else {
+            XCTFail("got wrong urlRequestDirector type")
+            return
+        }
+        
+        guard let paginationQueryStrategyInSut = paginatedURLRequestDirector.paginationQueryStrategy as? PageBasedQueryStrategy else {
+            XCTFail("got wrong paginationQueryStrategy type")
+            return
+        }
+        XCTAssertIdentical(paginationQueryStrategyInSut, paginationQueryStrategy)
+    }
 }

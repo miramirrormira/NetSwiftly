@@ -13,12 +13,11 @@ final class RequestableDecoratorTests: XCTestCase {
     }
     
     func test_request_with_failure_case_should_return_the_same_error_as_decorated_requestable() async throws {
-        let expectedReturnValue = 0
         let decoratedRequestable = RequestableStub<Int>(error: NetworkingClientSideError.cannotGenerateURL)
         let sut = RequestableDecorator<Int>(requestable: AnyRequestable(decoratedRequestable))
         
         do {
-            let _ = try await decoratedRequestable.request()
+            let _ = try await sut.request()
             XCTFail("should not get response")
         } catch let error as NetworkingClientSideError {
             XCTAssertEqual(error, NetworkingClientSideError.cannotGenerateURL)

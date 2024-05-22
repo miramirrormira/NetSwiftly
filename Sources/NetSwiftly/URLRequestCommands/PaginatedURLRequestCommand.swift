@@ -7,9 +7,9 @@
 
 import Foundation
 
-class PaginatedURLRequestCommand<T: Decodable>: URLRequestCommand<T> {
+public class PaginatedURLRequestCommand<T: Decodable>: URLRequestCommand<T> {
     
-    override func request() async throws -> T {
+    public override func request() async throws -> T {
         guard let requestDirector = super.urlRequestDirector as? PaginatedURLRequestDirector else {
             throw PaginatedURLRequestCommandError.didNotUsePaginatedURLRequestDirector
         }

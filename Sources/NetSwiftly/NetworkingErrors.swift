@@ -10,6 +10,7 @@ import Foundation
 public enum NetworkingClientSideError: Error {
     case cannotGenerateURLComponents
     case cannotGenerateURL
+    case wrongURLRequestableType
 }
 
 public enum NetworkingServerSideError: Error {

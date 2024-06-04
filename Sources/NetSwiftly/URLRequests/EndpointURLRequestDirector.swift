@@ -1,12 +1,12 @@
 //
-//  URLRequestDirector.swift
+//  EndpointURLRequestable.swift
 //
 //
 //  Created by Mira Yang on 4/26/24.
 //
 
 import Foundation
-public class URLRequestDirector: URLRequestDirectable {
+public class EndpointURLRequestDirector: URLRequestDirectable {
     public var networkConfiguration: NetworkConfiguration
     public var endpoint: Endpoint
     

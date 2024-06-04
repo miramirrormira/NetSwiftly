@@ -7,7 +7,7 @@
 
 import Foundation
 
-public class NetworkConfiguration {
+public struct NetworkConfiguration {
     public var host: String
     public var scheme: String
     public var apiBaseRoute: String?

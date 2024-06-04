@@ -8,7 +8,6 @@
 import Foundation
 
 public class PaginatedURLRequestCommand<T: Decodable>: URLRequestCommand<T> {
-    
     public override func request() async throws -> T {
         guard let requestDirector = super.urlRequestDirector as? PaginatedURLRequestDirector else {
             throw PaginatedURLRequestCommandError.didNotUsePaginatedURLRequestDirector
@@ -28,8 +27,8 @@ public extension PaginatedURLRequestCommand {
     convenience init(networkConfiguration: NetworkConfiguration,
                      endpoint: Endpoint,
                      paginationQueryStrategy: PaginationQueryStrategy) {
-        let baseURLRequestDirector = URLRequestDirector(networkConfiguration: networkConfiguration, endpoint: endpoint)
-        let pagedURLRequestDirector = PaginatedURLRequestDirector(urlRequestDirector: baseURLRequestDirector, paginationQueryStrategy: paginationQueryStrategy)
+        let baseURLRequestDirector = EndpointURLRequestDirector(networkConfiguration: networkConfiguration, endpoint: endpoint)
+        let pagedURLRequestDirector = PaginatedURLRequestDirector(urlRequestDirectable: baseURLRequestDirector, paginationQueryStrategy: paginationQueryStrategy)
         self.init(urlRequestDirector: pagedURLRequestDirector)
     }
 }

@@ -9,17 +9,13 @@ import Foundation
 
 public class URLRequestDirectableDecorator: URLRequestDirectable {
     
-    public var endpoint: Endpoint
-    public var networkConfiguration: NetworkConfiguration
-    public var urlRequestDirector: URLRequestDirectable
+    public var urlRequestable: URLRequestDirectable
     
-    public init(urlRequestDirector: URLRequestDirectable) {
-        self.urlRequestDirector = urlRequestDirector
-        self.endpoint = urlRequestDirector.endpoint
-        self.networkConfiguration = urlRequestDirector.networkConfiguration
+    public init(urlRequestDirectable: URLRequestDirectable) {
+        self.urlRequestable = urlRequestDirectable
     }
     
     public func getURLRequest() async throws -> URLRequest {
-        return try await urlRequestDirector.getURLRequest()
+        return try await urlRequestable.getURLRequest()
     }
 }

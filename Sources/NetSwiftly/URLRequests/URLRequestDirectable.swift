@@ -7,7 +7,5 @@
 
 import Foundation
 public protocol URLRequestDirectable {
-    var endpoint: Endpoint { get set }
-    var networkConfiguration: NetworkConfiguration { get set }
     func getURLRequest() async throws -> URLRequest
 }

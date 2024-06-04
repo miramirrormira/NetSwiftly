@@ -1,5 +1,5 @@
 //
-//  PageBasedURLRequestDirector.swift
+//  PaginatedURLRequestable.swift
 //
 //
 //  Created by Mira Yang on 4/27/24.
@@ -12,17 +12,20 @@ public class PaginatedURLRequestDirector: URLRequestDirectableDecorator {
     let paginationQueryStrategy: PaginationQueryStrategy
     var shouldUpdateEndpoint: Bool = true
     
-    public init(urlRequestDirector: URLRequestDirectable,
+    public init(urlRequestDirectable: URLRequestDirectable,
          paginationQueryStrategy: PaginationQueryStrategy) {
         self.paginationQueryStrategy = paginationQueryStrategy
-        super.init(urlRequestDirector: urlRequestDirector)
+        super.init(urlRequestDirectable: urlRequestDirectable)
     }
     
     private func updateEndpoind() async throws {
+        guard let urlRequestable = urlRequestable as? EndpointURLRequestDirector else {
+            throw NetworkingClientSideError.wrongURLRequestableType
+        }
         guard shouldUpdateEndpoint else { return }
         let parameters = try await paginationQueryStrategy.getNextPageQueryParameters()
         for (key, value) in parameters {
-            endpoint.queryParameters[key] = value
+            urlRequestable.endpoint.queryParameters[key] = value
         }
     }
     

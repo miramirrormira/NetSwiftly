@@ -7,39 +7,49 @@
 
 import Foundation
 
-public class PaginatedURLRequestCommand<Page: Decodable, Item: Decodable>: URLRequestCommand<Page> {
+public class PaginatedURLRequestCommand<Page: Decodable, Item: Decodable>: Requestable {
     
-    typealias Response = [Item]
+    public typealias Response = [Item]
     
     var transform: (Page) -> [Item]
+    var urlRequestable: URLRequestCommand<Page>
     
-    init(transform: @escaping (Page) -> [Item], 
-         urlRequestDirector: PaginatedURLRequestDirector,
+    init(transform: @escaping (Page) -> [Item],
+         requestableDirector: PaginatedURLRequestDirector,
          urlSession: URLSessionAbstractLayer = URLSession.shared,
          urlSessionTaskDelegate: URLSessionTaskDelegate? = nil,
          responseDecoder: ResponseDecoder = JSONDecoder()) {
         self.transform = transform
-        super.init(urlRequestDirector: urlRequestDirector, urlSession: urlSession, urlSessionTaskDelegate: urlSessionTaskDelegate, responseDecoder: responseDecoder)
+        self.urlRequestable = URLRequestCommand(urlRequestDirector: requestableDirector, urlSession: urlSession, urlSessionTaskDelegate: urlSessionTaskDelegate, responseDecoder: responseDecoder)
     }
     
     public func request() async throws -> [Item] {
-        let page: Page = try await request()
-        return transform(page)
-    }
-    
-    public override func request() async throws -> Page {
-        guard let requestDirector = super.urlRequestDirector as? PaginatedURLRequestDirector else {
+        guard let requestDirector = urlRequestable.urlRequestDirector as? PaginatedURLRequestDirector else {
             throw PaginatedURLRequestCommandError.didNotUsePaginatedURLRequestDirector
         }
         do {
-            let result = try await super.request()
+            let page = try await urlRequestable.request()
             requestDirector.shouldUpdateEndpoint = true
-            return result
+            return transform(page)
         } catch {
             requestDirector.shouldUpdateEndpoint = false
             throw error
         }
     }
+    
+//    public override func request() async throws -> Page {
+//        guard let requestDirector = super.urlRequestDirector as? PaginatedURLRequestDirector else {
+//            throw PaginatedURLRequestCommandError.didNotUsePaginatedURLRequestDirector
+//        }
+//        do {
+//            let result = try await super.request()
+//            requestDirector.shouldUpdateEndpoint = true
+//            return result
+//        } catch {
+//            requestDirector.shouldUpdateEndpoint = false
+//            throw error
+//        }
+//    }
 }
 
 public extension PaginatedURLRequestCommand {
@@ -49,7 +59,7 @@ public extension PaginatedURLRequestCommand {
                      transform: @escaping (Page) -> [Item]) {
         let baseURLRequestDirector = EndpointURLRequestDirector(networkConfiguration: networkConfiguration, endpoint: endpoint)
         let pagedURLRequestDirector = PaginatedURLRequestDirector(urlRequestDirectable: baseURLRequestDirector, paginationQueryStrategy: paginationQueryStrategy)
-        self.init(transform: transform, urlRequestDirector: pagedURLRequestDirector)
+        self.init(transform: transform, requestableDirector: pagedURLRequestDirector)
     }
 }
 

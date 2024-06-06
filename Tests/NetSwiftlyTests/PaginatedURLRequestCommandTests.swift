@@ -10,9 +10,9 @@ final class PaginatedURLRequestCommandTests: XCTestCase {
         let data = try JSONEncoder().encode(page)
         let urlRequestResponse = try URLRequestResponse.fixtureForHTTPURLResponse(data: data, statusCode: 500)
         let director = PaginatedURLRequestDirector(urlRequestDirectable: EndpointURLRequestDirector(networkConfiguration: .fixture(), endpoint: .fixture()), paginationQueryStrategy: PageBasedQueryStrategy(pageKey: "page"))
-        let sut = PaginatedURLRequestCommand<Page, Item>(transform: { $0.items }, urlRequestDirector: director, urlSession: URLSessionStub(data: urlRequestResponse.data, response: urlRequestResponse.response, delayInSeconds: 0.5))
+        let sut = PaginatedURLRequestCommand<Page, Item>(transform: { $0.items }, requestableDirector: director, urlSession: URLSessionStub(data: urlRequestResponse.data, response: urlRequestResponse.response, delayInSeconds: 0.5))
         XCTAssertTrue(director.shouldUpdateEndpoint)
-        let _: Page? = try? await sut.request()
+        let _ = try? await sut.request()
         XCTAssertFalse(director.shouldUpdateEndpoint)
     }
     
@@ -21,9 +21,9 @@ final class PaginatedURLRequestCommandTests: XCTestCase {
         let data = try JSONEncoder().encode(testStruct)
         let urlRequestResponse = try URLRequestResponse.fixtureForHTTPURLResponse(data: data)
         let director = PaginatedURLRequestDirector(urlRequestDirectable: EndpointURLRequestDirector(networkConfiguration: .fixture(), endpoint: .fixture()), paginationQueryStrategy: PageBasedQueryStrategy(pageKey: "page"))
-        let sut = PaginatedURLRequestCommand<Page, Item>(transform: { $0.items }, urlRequestDirector: director, urlSession: URLSessionStub(data: urlRequestResponse.data, response: urlRequestResponse.response, delayInSeconds: 0.5))
+        let sut = PaginatedURLRequestCommand<Page, Item>(transform: { $0.items }, requestableDirector: director, urlSession: URLSessionStub(data: urlRequestResponse.data, response: urlRequestResponse.response, delayInSeconds: 0.5))
         XCTAssertTrue(director.shouldUpdateEndpoint)
-        let _: Page = try await sut.request()
+        let _ = try await sut.request()
         XCTAssertTrue(director.shouldUpdateEndpoint)
     }
     
@@ -34,7 +34,7 @@ final class PaginatedURLRequestCommandTests: XCTestCase {
         
         let sut: PaginatedURLRequestCommand<Page, Item> = .init(networkConfiguration: networkConfiguration, endpoint: endpoint, paginationQueryStrategy: paginationQueryStrategy, transform: { $0.items })
         
-        guard let paginatedURLRequestDirector = sut.urlRequestDirector as? PaginatedURLRequestDirector else {
+        guard let paginatedURLRequestDirector = sut.urlRequestable.urlRequestDirector as? PaginatedURLRequestDirector else {
             XCTFail("wrong urlRequestDirector type")
             return
         }

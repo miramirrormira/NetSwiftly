@@ -20,7 +20,8 @@ struct TestStruct: Codable, Equatable, Identifiable {
     }
 }
 
-struct Page: Codable {
+struct Page: Identifiable, Codable {
+    var id: String
     var items: [Item]
 }
 

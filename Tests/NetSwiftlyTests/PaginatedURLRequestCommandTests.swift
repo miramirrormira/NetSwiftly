@@ -6,7 +6,7 @@ final class PaginatedURLRequestCommandTests: XCTestCase {
     
 
     func test_with_failure_case_shouldUpdateEndpoint_should_be_false_after_request() async throws {
-        let page = Page(items: [Item(id: "0")])
+        let page = Page(id: "0", items: [Item(id: "0")])
         let data = try JSONEncoder().encode(page)
         let urlRequestResponse = try URLRequestResponse.fixtureForHTTPURLResponse(data: data, statusCode: 500)
         let director = PaginatedURLRequestDirector(urlRequestDirectable: EndpointURLRequestDirector(networkConfiguration: .fixture(), endpoint: .fixture()), paginationQueryStrategy: PageBasedQueryStrategy(pageKey: "page"))
@@ -17,7 +17,7 @@ final class PaginatedURLRequestCommandTests: XCTestCase {
     }
     
     func test_with_success_case_shouldUpdateEndpoint_should_be_true_after_request() async throws {
-        let testStruct = Page(items: [Item(id: "0")])
+        let testStruct = Page(id: "0", items: [Item(id: "0")])
         let data = try JSONEncoder().encode(testStruct)
         let urlRequestResponse = try URLRequestResponse.fixtureForHTTPURLResponse(data: data)
         let director = PaginatedURLRequestDirector(urlRequestDirectable: EndpointURLRequestDirector(networkConfiguration: .fixture(), endpoint: .fixture()), paginationQueryStrategy: PageBasedQueryStrategy(pageKey: "page"))

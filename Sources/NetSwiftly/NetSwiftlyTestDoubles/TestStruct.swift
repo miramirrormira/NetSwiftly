@@ -19,3 +19,11 @@ struct TestStruct: Codable, Equatable, Identifiable {
         self.value = value
     }
 }
+
+struct Page: Codable {
+    var items: [Item]
+}
+
+struct Item: Identifiable, Codable {
+    var id: String
+}

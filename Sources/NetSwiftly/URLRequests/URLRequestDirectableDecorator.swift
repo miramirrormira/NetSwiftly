@@ -9,13 +9,13 @@ import Foundation
 
 public class URLRequestDirectableDecorator: URLRequestDirectable {
     
-    public var urlRequestable: URLRequestDirectable
+    public var urlRequestDirectable: URLRequestDirectable
     
     public init(urlRequestDirectable: URLRequestDirectable) {
-        self.urlRequestable = urlRequestDirectable
+        self.urlRequestDirectable = urlRequestDirectable
     }
     
     public func getURLRequest() async throws -> URLRequest {
-        return try await urlRequestable.getURLRequest()
+        return try await urlRequestDirectable.getURLRequest()
     }
 }

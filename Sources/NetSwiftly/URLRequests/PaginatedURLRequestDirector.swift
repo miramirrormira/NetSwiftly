@@ -19,13 +19,13 @@ public class PaginatedURLRequestDirector: URLRequestDirectableDecorator {
     }
     
     private func updateEndpoind() async throws {
-        guard let urlRequestable = urlRequestable as? EndpointURLRequestDirector else {
+        guard let urlRequestDirectable = urlRequestDirectable as? EndpointURLRequestDirector else {
             throw NetworkingClientSideError.wrongURLRequestableType
         }
         guard shouldUpdateEndpoint else { return }
         let parameters = try await paginationQueryStrategy.getNextPageQueryParameters()
         for (key, value) in parameters {
-            urlRequestable.endpoint.queryParameters[key] = value
+            urlRequestDirectable.endpoint.queryParameters[key] = value
         }
     }
     

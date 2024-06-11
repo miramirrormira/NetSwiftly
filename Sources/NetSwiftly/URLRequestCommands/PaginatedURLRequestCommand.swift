@@ -11,8 +11,8 @@ public class PaginatedURLRequestCommand<Page: Decodable, Item: Decodable>: Reque
     
     public typealias Response = [Item]
     
-    var transform: (Page) -> [Item]
-    var urlRequestable: URLRequestCommand<Page>
+    let transform: (Page) -> [Item]
+    let urlRequestable: URLRequestCommand<Page>
     
     init(transform: @escaping (Page) -> [Item],
          requestableDirector: PaginatedURLRequestDirector,
@@ -36,20 +36,6 @@ public class PaginatedURLRequestCommand<Page: Decodable, Item: Decodable>: Reque
             throw error
         }
     }
-    
-//    public override func request() async throws -> Page {
-//        guard let requestDirector = super.urlRequestDirector as? PaginatedURLRequestDirector else {
-//            throw PaginatedURLRequestCommandError.didNotUsePaginatedURLRequestDirector
-//        }
-//        do {
-//            let result = try await super.request()
-//            requestDirector.shouldUpdateEndpoint = true
-//            return result
-//        } catch {
-//            requestDirector.shouldUpdateEndpoint = false
-//            throw error
-//        }
-//    }
 }
 
 public extension PaginatedURLRequestCommand {

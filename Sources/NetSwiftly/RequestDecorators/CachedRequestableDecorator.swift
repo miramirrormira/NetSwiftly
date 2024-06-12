@@ -9,23 +9,13 @@ import Foundation
 import CacheSwiftly
 
 public class CachedRequestableDecorator<T>: RequestableDecorator<T> {
-    public let cache: Cache<T>
+    public let cache: Cache<Task<T, Error>>
     public let key: Cache.Key
-    public let calculateCost: ((T) -> Int)
-    var task: Task<T, Error>?
-    let threadSafetyQueue = DispatchQueue(label: "NetSwiftly.CachedRequestableDecorator.threadSafetyQueue", 
-                                          attributes: [.concurrent],
-                                          target: .global(qos: .background))
+    public let calculateCost: ((Task<T, Error>) -> Int)
     
-    public var safeTask: Task<T, Error>? {
-        threadSafetyQueue.sync {
-            task
-        }
-    }
-    
-    public init(cache: Cache<T>,
+    public init(cache: Cache<Task<T, Error>>,
                 key: Cache.Key,
-                calculateCost: @escaping ((T) -> Int) = { _ in 1},
+                calculateCost: @escaping ((Task<T, Error>) -> Int) = { _ in 1},
                 requestable: AnyRequestable<T>) {
         self.cache = cache
         self.key = key
@@ -34,25 +24,13 @@ public class CachedRequestableDecorator<T>: RequestableDecorator<T> {
     }
     
     public override func request() async throws -> T {
-        if let cached = cache[key] {
-            return cached
+        if let cachedTask = cache[key] {
+            return try await cachedTask.value
         }
-        if safeTask != nil {
-            return try await safeTask!.value
+        let task = Task {
+            return try await super.request()
         }
-        createTask()
-        let response = try await safeTask!.value
-        try cache.setValue(response, forKey: key, cost: calculateCost(response))
-        return response
-    }
-    
-    func createTask() {
-        threadSafetyQueue.sync(flags: .barrier) {
-            if task == nil {
-                task = Task {
-                    return try await super.request()
-                }
-            }
-        }
+        try cache.setValue(task, forKey: key, cost: calculateCost(task))
+        return try await task.value
     }
 }

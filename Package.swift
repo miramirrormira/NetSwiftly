@@ -7,7 +7,7 @@ let package = Package(
     name: "NetSwiftly",
     platforms: [
         .iOS(.v16),
-        .macOS(.v12)
+        .macOS(.v13)
     ],
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
@@ -15,7 +15,7 @@ let package = Package(
             name: "NetSwiftly",
             targets: ["NetSwiftly"]),
     ],
-    dependencies: [.package(url: "git@github.com:miramirrormira/CacheSwiftly.git", branch: "main")],
+    dependencies: [.package(url: "https://github.com/miramirrormira/CacheSwiftly", branch: "main")],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.

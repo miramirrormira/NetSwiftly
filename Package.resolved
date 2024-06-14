@@ -1,13 +1,13 @@
 {
-  "originHash" : "e8c5cf1548fab21acfef7efa229650b8a64fc21d7c17a84fb98312f0dee1877b",
+  "originHash" : "5b9dee6bb1952acfd898ae4bfc01ead7fb932fc8382fb4b990cc258311375d7d",
   "pins" : [
     {
       "identity" : "cacheswiftly",
       "kind" : "remoteSourceControl",
-      "location" : "git@github.com:miramirrormira/CacheSwiftly.git",
+      "location" : "https://github.com/miramirrormira/CacheSwiftly",
       "state" : {
         "branch" : "main",
-        "revision" : "05e0123b5af3163489709e0b5d5456b5cf950b9a"
+        "revision" : "6f81b71ecc081d6cb1a4002d291e774fbb8a882c"
       }
     }
   ],

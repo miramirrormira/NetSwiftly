@@ -9,12 +9,12 @@ import Foundation
 import CacheSwiftly
 
 public class CachedRequestableDecorator<T>: RequestableDecorator<T> {
-    public let cache: Cache<Task<T, Error>>
-    public let key: Cache.Key
+    public let cache: AnyCachable<Task<T, Error>>
+    public let key: AnyCachable.Key
     public let calculateCost: ((Task<T, Error>) -> Int)
     
-    public init(cache: Cache<Task<T, Error>>,
-                key: Cache.Key,
+    public init(cache: AnyCachable<Task<T, Error>>,
+                key: AnyCachable.Key,
                 calculateCost: @escaping ((Task<T, Error>) -> Int) = { _ in 1},
                 requestable: AnyRequestable<T>) {
         self.cache = cache
@@ -24,7 +24,7 @@ public class CachedRequestableDecorator<T>: RequestableDecorator<T> {
     }
     
     public override func request() async throws -> T {
-        if let cachedTask = cache[key] {
+        if let cachedTask = try await cache[key] {
             return try await cachedTask.value
         }
         let task = Task {

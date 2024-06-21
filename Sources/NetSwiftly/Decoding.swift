@@ -1,5 +1,5 @@
 //
-//  File 2.swift
+//  ResponseDecoder.swift
 //  
 //
 //  Created by Mira Yang on 4/29/24.

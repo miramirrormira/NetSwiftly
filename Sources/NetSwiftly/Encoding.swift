@@ -20,9 +20,16 @@ public struct JSONBodyEncoder: BodyEncoder {
 }
 
 public extension Encodable {
-    func toDictionary() throws -> [String: Any]? {
+    func toDictionary() throws -> [String: Any] {
         let data = try JSONEncoder().encode(self)
         let jsonData = try JSONSerialization.jsonObject(with: data)
-        return jsonData as? [String : Any]
+        if let jsonData = jsonData as? [String : Any] {
+            return jsonData
+        }
+        throw EncodingErrors.cannotConvertToDictionary
     }
+}
+
+enum EncodingErrors: Error {
+    case cannotConvertToDictionary
 }

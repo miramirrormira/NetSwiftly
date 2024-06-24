@@ -13,13 +13,13 @@ public class RequestableStub<T>: Requestable {
     private(set) var result: T?
     private(set) var error: Error?
     
-    public init(delayInSeconds: Double = 0.5,
+    public init(delayInSeconds: Double = 0.0,
                 returning result: T) {
         self.delayInSeconds = delayInSeconds
         self.result = result
     }
     
-    public init(delayInSeconds: Double = 0.5,
+    public init(delayInSeconds: Double = 0.0,
                 error: Error) {
         self.delayInSeconds = delayInSeconds
         self.error = error

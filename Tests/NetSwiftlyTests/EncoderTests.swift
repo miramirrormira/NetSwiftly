@@ -16,4 +16,11 @@ final class EncoderTests: XCTestCase {
         }
         
     }
+    
+    func test_toDictionary() throws {
+        let object = TestStruct(name: "name", value: nil)
+        let dictionary = try object.toDictionary()
+        XCTAssertNil(dictionary["value"])
+        XCTAssertEqual(dictionary["name"] as? String, "name")
+    }
 }

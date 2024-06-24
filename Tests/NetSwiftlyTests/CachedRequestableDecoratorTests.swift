@@ -12,7 +12,7 @@ final class CachedRequestableDecoratorTests: XCTestCase {
             return -1
         }
         let requestable = AnyRequestable(RequestableStub<Int>(returning: 0))
-        let sut = CachedRequestableDecorator(cache: AnyCachable(cache), key: "key", calculateCost: calculateCost, requestable: requestable)
+        let sut = CachedTaskRequestableDecorator(cache: AnyCachable(cache), key: "key", calculateCost: calculateCost, requestable: requestable)
         _ = try await sut.request()
         XCTAssertTrue(triggered)
     }
@@ -20,7 +20,7 @@ final class CachedRequestableDecoratorTests: XCTestCase {
     func test_request_return0_shouldCacheResult() async throws {
         let cache = LRUCache<Task<Int, any Error>>(costLimit: 10)
         let requestable = AnyRequestable(RequestableStub<Int>(returning: 0))
-        let sut = CachedRequestableDecorator(cache: AnyCachable(cache), key: "key", requestable: requestable)
+        let sut = CachedTaskRequestableDecorator(cache: AnyCachable(cache), key: "key", requestable: requestable)
         _ = try await sut.request()
         let cached = try await cache["key"]?.value
         XCTAssertEqual(cached, 0)
@@ -30,7 +30,7 @@ final class CachedRequestableDecoratorTests: XCTestCase {
     func test_request_return0then1_shouldReturn0TwiceDueToCaching() async throws {
         let cache = LRUCache<Task<Int, any Error>>(costLimit: 10)
         let requestable = AnyRequestable(RequestableStub<Int>(returning: 0))
-        let sut = CachedRequestableDecorator(cache: AnyCachable(cache), key: "key", requestable: requestable)
+        let sut = CachedTaskRequestableDecorator(cache: AnyCachable(cache), key: "key", requestable: requestable)
         let firstResult = try await sut.request()
         XCTAssertEqual(firstResult, 0)
         sut.requestable = AnyRequestable(RequestableStub<Int>(returning: 1))

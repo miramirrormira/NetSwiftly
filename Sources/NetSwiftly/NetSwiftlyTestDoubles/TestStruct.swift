@@ -9,12 +9,12 @@ import Foundation
 
 struct TestStruct: Codable, Equatable, Identifiable {
     var name: String
-    var value: Int
+    var value: Int?
     var id: String {
         name + "\(value)"
     }
     
-    public init(name: String = "name", value: Int = 123) {
+    public init(name: String = "name", value: Int? = 123) {
         self.name = name
         self.value = value
     }

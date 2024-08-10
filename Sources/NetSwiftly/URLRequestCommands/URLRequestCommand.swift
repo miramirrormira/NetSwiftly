@@ -14,7 +14,7 @@ public class URLRequestCommand<T: Decodable>: Requestable {
     public let urlRequestDirector: URLRequestDirectable
     public let urlSession: URLSessionAbstractLayer
     public let urlSessionTaskDelegate: URLSessionTaskDelegate?
-    public let responseDecoder: ResponseDecoder
+    public var responseDecoder: ResponseDecoder?
     
     public init(urlRequestDirector: URLRequestDirectable,
          urlSession: URLSessionAbstractLayer = URLSession.shared,
@@ -26,6 +26,15 @@ public class URLRequestCommand<T: Decodable>: Requestable {
         self.responseDecoder = responseDecoder
     }
     
+    //TODO: add test
+    public init(urlRequestDirector: URLRequestDirectable,
+         urlSession: URLSessionAbstractLayer = URLSession.shared,
+         urlSessionTaskDelegate: URLSessionTaskDelegate? = nil) where T == Data {
+        self.urlRequestDirector = urlRequestDirector
+        self.urlSession = urlSession
+        self.urlSessionTaskDelegate = urlSessionTaskDelegate
+    }
+    
     public func request() async throws -> T {
         let (data, response) = try await executeURLRequest()
         guard let httpResonse = response as? HTTPURLResponse else {
@@ -34,8 +43,13 @@ public class URLRequestCommand<T: Decodable>: Requestable {
         guard 200..<300 ~= httpResonse.statusCode else {
             throw NetworkingServerSideError.httpResponseError(statusCode: httpResonse.statusCode, data: data)
         }
-        let decoded: T = try responseDecoder.decode(T.self, from: data)
-        return decoded
+        if let responseDecoder = self.responseDecoder {
+            return try responseDecoder.decode(T.self, from: data)
+        }
+        if let data = data as? T {
+            return data
+        }
+        throw NetworkingClientSideError.noResponseValue
     }
     
     func executeURLRequest() async throws -> (Data, URLResponse) {

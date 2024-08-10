@@ -11,6 +11,7 @@ public enum NetworkingClientSideError: Error {
     case cannotGenerateURLComponents
     case cannotGenerateURL
     case wrongURLRequestableType
+    case noResponseValue
 }
 
 public enum NetworkingServerSideError: Error {
